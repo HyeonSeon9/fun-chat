@@ -1,11 +1,11 @@
 var stompClient = null;
 
 function connect() {
-    var socket = new SockJS('https://www.sheepdeny.shop/chat');
+    var socket = new SockJS('/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('https://www.sheepdeny.shop/topic/public', function (chatMessage) {
+        stompClient.subscribe('/topic/public', function (chatMessage) {
             showMessage(JSON.parse(chatMessage.body).content);
         });
     });
@@ -13,7 +13,7 @@ function connect() {
 
 function sendMessage() {
     var message = document.getElementById('message').value;
-    stompClient.send("https://www.sheepdeny.shop/app/chat.sendMessage", {}, JSON.stringify({'content': message}));
+    stompClient.send("/app/chat.sendMessage", {}, JSON.stringify({'content': message}));
 }
 
 function showMessage(message) {
