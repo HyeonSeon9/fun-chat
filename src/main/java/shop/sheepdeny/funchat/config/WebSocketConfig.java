@@ -24,7 +24,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
-        registry.addEndpoint("/chat").withSockJS().setInterceptors(new HttpSessionHandshakeInterceptor() {
+        registry.addEndpoint("/chat").setAllowedOriginPatterns("*").withSockJS().setInterceptors(new HttpSessionHandshakeInterceptor() {
             @Override
             public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
                 log.info("New connection from: {}", request.getRemoteAddress().getHostName());
@@ -34,6 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 
     }
+
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
